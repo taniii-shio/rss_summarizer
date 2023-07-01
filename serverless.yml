@@ -1,0 +1,14 @@
+service: rss-summarizer
+frameworkVersion: "3"
+provider:
+  name: aws
+  runtime: python3.9
+  region: ap-northeast-1
+  environment:
+    OPENAI_APIKEY: ${ssm:OPENAI_APIKEY}
+    SLACK_WEBHOOK_URL: ${ssm:SLACK_WEBHOOK_URL}
+functions:
+  lambda_handler:
+    handler: handler.lambda_handler
+    events:
+      - schedule: cron(0 8 * * ? *)
